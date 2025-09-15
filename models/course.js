@@ -1,17 +1,20 @@
 const sequelize = require('../config/db')
 const {DataTypes} = require('sequelize')
 
-const Location = sequelize.define('location', {
+const Course = sequelize.define('course', {
     id:{
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
-    address:{
+    name:{
+        type: DataTypes.STRING(100)
+    },
+    duration:{
         type: DataTypes.STRING
     },
-    location:{
-        type: DataTypes.STRING
+    description:{
+        type: DataTypes.TEXT
     }
 
 },
@@ -20,4 +23,4 @@ const Location = sequelize.define('location', {
     freezeTableName: true
 })
 
-module.exports = Location
+module.exports = Course

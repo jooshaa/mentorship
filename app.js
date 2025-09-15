@@ -2,9 +2,13 @@ const express = require('express');
 const app = express();
 const sequelize = require('./config/db')
 const config = require('config')
+const indexRouter = require('./routes/index.route')
 
 app.use(express.json());
 const port = config.get('port') ?? 3030
+
+app.use('/api', indexRouter)
+
 
 const start = async ()=> {
    try{
