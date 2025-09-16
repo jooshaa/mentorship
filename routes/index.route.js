@@ -1,9 +1,27 @@
 const router = require('express').Router()
 
 const adminRouter = require('./admin.route')
-const authRouter = require('./auth.route')
+const studentAuthRouter = require('./auth.route')
+const mentorAuthRouter = require('./auth.route_mentor')
+const studentRouter = require('./student.route')
+const mentorRouter = require('./mentor.route')
+const courseRouter = require('./course.route')
+const locationRouter = require('./location.route')
+const reviewRouter = require('./review.route')
+const paymentRouter = require('./payment.route')
+const contractRouter = require('./contract.route')
 
 router.use('/admin', adminRouter)
-router.use('/auth', authRouter)
+router.use('/auth-student', studentAuthRouter)
+router.use('/auth-mentor', mentorAuthRouter)
+router.use('/student', studentRouter)
+router.use('/mentor', mentorRouter)
+router.use('/course', courseRouter)
+router.use('/location', locationRouter)
+router.use('/review', reviewRouter)
+router.use('/payment', paymentRouter)
+router.use('/contract', contractRouter)
+
+
 
 module.exports = router
