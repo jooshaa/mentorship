@@ -33,9 +33,9 @@ const Admin = sequelize.define('admin', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
-    is_admin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+    role: {
+        type: DataTypes.STRING(10),
+        defaultValue: "admin"
     }
 
 },

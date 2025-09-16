@@ -32,6 +32,10 @@ const Mentor = sequelize.define('mentor', {
     specialization: {        
         type: DataTypes.STRING(100),
         allowNull: true
+    },
+    role: {
+        type : DataTypes.STRING(20),
+        defaultValue: "mentor"
     }
 },
     {

@@ -3,11 +3,19 @@ const app = express();
 const sequelize = require('./config/db')
 const config = require('config')
 const indexRouter = require('./routes/index.route')
+const cookieParser = require("cookie-parser");
+const errorHandling = require('./middleware/errors/error.handling');
 
+require('dotenv').config({path: `.env.${process.env.NODE_ENV}`})
+console.log(process.env.NODE_ENV)
 app.use(express.json());
+app.use(cookieParser())
 const port = config.get('port') ?? 3030
 
 app.use('/api', indexRouter)
+app.use(errorHandling)
+
+
 
 
 const start = async ()=> {
