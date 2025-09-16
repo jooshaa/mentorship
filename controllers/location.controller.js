@@ -1,7 +1,7 @@
 const Location = require("../models/location");
 const { successMessage, errorMessage } = require("../helper/send.Err_Suc");
 
-// Создать локацию
+
 const createLocation = async (req, res) => {
   try {
     const newLocation = await Location.create(req.body);
@@ -11,7 +11,7 @@ const createLocation = async (req, res) => {
   }
 };
 
-// Получить все локации
+
 const getAllLocations = async (req, res) => {
   try {
     const locations = await Location.findAll();
@@ -21,7 +21,7 @@ const getAllLocations = async (req, res) => {
   }
 };
 
-// Получить локацию по ID
+
 const getLocationById = async (req, res) => {
   try {
     const location = await Location.findByPk(req.params.id);
@@ -33,7 +33,7 @@ const getLocationById = async (req, res) => {
   }
 };
 
-// Обновить локацию
+
 const updateLocation = async (req, res) => {
   try {
     const location = await Location.findByPk(req.params.id);
@@ -46,7 +46,7 @@ const updateLocation = async (req, res) => {
   }
 };
 
-// Удалить локацию
+
 const deleteLocation = async (req, res) => {
   try {
     const location = await Location.findByPk(req.params.id);

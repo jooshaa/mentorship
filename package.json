@@ -6,6 +6,7 @@
     "cross-env": "^10.0.0",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^7.0.6",
     "otp": "^1.1.2",
@@ -21,8 +22,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=dev node --watch app",
-    "prod": "cross-env NODE_ENV=prod node app"
+    "dev": "cross-env NODE_ENV=development node --watch app",
+    "prod": "cross-env NODE_ENV=production node app"
   },
   "keywords": [],
   "author": "",

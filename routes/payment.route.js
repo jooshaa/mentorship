@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const validate = require("../middleware/validate");
+const validate = require("../middleware/validation/joi.validator");
 const paymentController = require("../controllers/payment.controller");
 const { createPaymentSchema, updatePaymentSchema } = require("../validations/payment.validation");
 

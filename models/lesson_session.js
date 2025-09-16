@@ -31,4 +31,4 @@ Mentor.hasMany(L_Session)
 L_Session.belongsTo(Mentor)
 
 
-module.exports = Course
+module.exports = L_Session

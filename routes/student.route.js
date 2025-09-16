@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const validate = require("../middleware/validate");
+const validate = require("../middleware/validation/joi.validator");
 const studentController = require("../controllers/student.controller");
 const { createStudentSchema, updateStudentSchema } = require("../validations/student.validation");
 

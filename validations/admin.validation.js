@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const adminRegisterSchema = Joi.object({
+const adminCreateSchema = Joi.object({
   name: Joi.string().max(72).required(),
   email: Joi.string().email().max(82).required(),
   password: Joi.string().min(6).max(100).required(),
@@ -15,6 +15,6 @@ const adminLoginSchema = Joi.object({
 });
 
 module.exports = {
-  adminRegisterSchema,
+  adminCreateSchema,
   adminLoginSchema,
 };

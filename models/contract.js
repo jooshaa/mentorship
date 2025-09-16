@@ -18,7 +18,7 @@ const Contract = sequelize.define('contract', {
         type: DataTypes.ENUM('cash', 'card'),
     },
     status: {
-        type: DataTypes.ENUM('active', "cancelled", "completed"),
+        type: DataTypes.ENUM("pending", 'active', "cancelled", "completed"),
         allowNull: false,
         defaultValue: 'pending'
     },

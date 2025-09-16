@@ -2,7 +2,7 @@ const { successMessage, errorMessage } = require('../helper/send.Err_Suc')
 const Admin = require("../models/admin");
 const { hashPass, compareHash } = require("../utils/bcrypt");
 const JwtService = require("../utils/jwt");
-const { errorMessage, successMessage } = require("../helper/send.Err_Suc");
+
 
 function getPayload(admin) {
   return { id: admin.id, email: admin.email, role: admin.role };
