@@ -3,11 +3,15 @@ const router = express.Router();
 const validate = require("../middleware/validation/joi.validator");
 const paymentController = require("../controllers/payment.controller");
 const { createPaymentSchema, updatePaymentSchema } = require("../validations/payment.validation");
+const isVerified = require('../middleware/guards/authMiddleware')
+const onlyAdmins = require('../middleware/guards/onlyAdmins')
+const selfUser = require('../middleware/guards/selfStudent');
 
-router.post("/", validate(createPaymentSchema), paymentController.createPayment);
-router.get("/", paymentController.getAllPayments);
-router.get("/:id", paymentController.getPaymentById);
-router.patch("/:id", validate(updatePaymentSchema), paymentController.updatePayment);
-router.delete("/:id", paymentController.deletePayment);
+
+router.post("/", validate(createPaymentSchema), isVerified, onlyAdmins,  paymentController.createPayment);
+router.get("/", isVerified, onlyAdmins, paymentController.getAllPayments);
+router.get("/:id", isVerified, selfUser, onlyAdmins, paymentController.getPaymentById);
+router.patch("/:id", isVerified, onlyAdmins, validate(updatePaymentSchema), paymentController.updatePayment);
+router.delete("/:id", isVerified, onlyAdmins, paymentController.deletePayment);
 
 module.exports = router;

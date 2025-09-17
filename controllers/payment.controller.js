@@ -1,7 +1,13 @@
 const Payment = require("../models/payment");
 const { successMessage, errorMessage } = require("../helper/send.Err_Suc");
+const Student = require("../models/student");
+const Contract = require("../models/contract");
+const Course = require("../models/course");
+const Mentor = require("../models/mentor");
+const {Op} = require('sequelize')
 
-// Создать платеж
+
+
 const createPayment = async (req, res) => {
   try {
     const newPayment = await Payment.create(req.body);
@@ -11,7 +17,27 @@ const createPayment = async (req, res) => {
   }
 };
 
-// Получить все платежи
+const findPaid = async (req, res)=>{
+  const {studentId} = req.params
+  try{
+     const payments = await Payment.findAll({
+  include: [
+    {
+      model: Student,
+      where: { id: studentId } 
+    },
+    {
+      model: Contract,
+      include: [Course, Mentor]
+    }
+  ]
+});
+
+  }catch(error){
+    return errorMessage(res, error.message, 500, "Error finding payment");
+  }
+}
+
 const getAllPayments = async (req, res) => {
   try {
     const payments = await Payment.findAll();
@@ -21,7 +47,7 @@ const getAllPayments = async (req, res) => {
   }
 };
 
-// Получить платеж по ID
+
 const getPaymentById = async (req, res) => {
   try {
     const payment = await Payment.findByPk(req.params.id);
@@ -33,7 +59,7 @@ const getPaymentById = async (req, res) => {
   }
 };
 
-// Обновить платеж
+
 const updatePayment = async (req, res) => {
   try {
     const payment = await Payment.findByPk(req.params.id);
@@ -46,7 +72,7 @@ const updatePayment = async (req, res) => {
   }
 };
 
-// Удалить платеж
+
 const deletePayment = async (req, res) => {
   try {
     const payment = await Payment.findByPk(req.params.id);

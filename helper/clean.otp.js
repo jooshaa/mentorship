@@ -13,5 +13,11 @@ function cleanOtp(body = {}, expiration_time) {
         }
     }, delay)
 }
+// setInterval(()=>{
+//     cleanOtp();
+// }, 3 * 60 * 1000)
+
+
+
 
 module.exports = cleanOtp

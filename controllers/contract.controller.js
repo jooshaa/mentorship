@@ -1,7 +1,11 @@
 const Contract = require("../models/contract");
 const { successMessage, errorMessage } = require("../helper/send.Err_Suc");
+const Course = require("../models/course");
+const Mentor = require("../models/mentor");
+const Student = require("../models/student");
+const {Op} = require('sequelize')
 
-// Создать контракт
+
 const createContract = async (req, res) => {
   try {
     const newContract = await Contract.create(req.body);
@@ -11,7 +15,33 @@ const createContract = async (req, res) => {
   }
 };
 
-// Получить все контракты
+
+const findByTime = async (req, res) => {
+const { startDate, endDate } = req.params;
+const start = new Date(startDate);
+const end = new Date(endDate);
+
+
+  try{
+    const contracts = await Contract.findAll({
+    where: {
+      createdAt: {
+        [Op.between]: [start, end]
+      },
+      status: "active"
+    },
+    include: [Student, Mentor, Course]
+  });
+  successMessage(res, 200, "find", contracts)
+
+  }catch(error){
+    errorMessage(res, error.message, 400, "Error in finding by time")
+  }
+}
+
+
+
+
 const getAllContracts = async (req, res) => {
   try {
     const contracts = await Contract.findAll();
@@ -21,7 +51,7 @@ const getAllContracts = async (req, res) => {
   }
 };
 
-// Получить контракт по ID
+
 const getContractById = async (req, res) => {
   try {
     const contract = await Contract.findByPk(req.params.id);
@@ -33,7 +63,7 @@ const getContractById = async (req, res) => {
   }
 };
 
-// Обновить контракт
+
 const updateContract = async (req, res) => {
   try {
     const contract = await Contract.findByPk(req.params.id);
@@ -46,7 +76,7 @@ const updateContract = async (req, res) => {
   }
 };
 
-// Удалить контракт
+
 const deleteContract = async (req, res) => {
   try {
     const contract = await Contract.findByPk(req.params.id);
@@ -65,4 +95,5 @@ module.exports = {
   getContractById,
   updateContract,
   deleteContract,
+  findByTime
 };

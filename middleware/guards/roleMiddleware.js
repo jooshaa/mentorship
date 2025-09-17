@@ -1,4 +1,4 @@
-const ApiError = require("../helper/api.error");
+const ApiError = require("../../helper/api.error");
 
 module.exports = function (roles = []) {
     return function (req, res, next) {

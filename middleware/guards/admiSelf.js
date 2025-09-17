@@ -1,5 +1,4 @@
 const ApiError = require("../../helper/api.error");
-const Student = require("../../models/student");
 const JwtService = require('../../utils/jwt');
 
 //patch blan delete
@@ -18,15 +17,11 @@ module.exports = async function selfCheck(req, res, next) {
             throw ApiError.forbidden('You are not allowed')
         }
         if(body.is_creator){
-            return next()
-        }
-        //admin self route
-        if(body.role == "admin" ){
            return next()
         }
 
-        if((body.role == "student" || body.role == "mentor") && body.id == Number(id)){
-            return next()
+        if(body.role == "admin" && body.id == Number(id)){
+           return next()
         }
         throw ApiError.forbidden('You are not allowed')
 

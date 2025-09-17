@@ -5,7 +5,7 @@ const JwtService = require("../utils/jwt");
 
 
 function getPayload(admin) {
-  return { id: admin.id, email: admin.email, role: admin.role };
+  return { id: admin.id, email: admin.email, role: admin.role, is_creator: admin.is_creator };
 }
 //create
 const createAdmin = async (req, res) => {
