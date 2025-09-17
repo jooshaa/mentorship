@@ -9,7 +9,7 @@ const selfUser = require('../middleware/guards/selfStudent')
 
 router.post("/",  validate(createCourseSchema),  isVerified, onlyAdmins, courseController.createCourse);///mentors also can add lesson or admin
 router.get("/", isVerified, onlyAdmins, courseController.getAllCourses);
-router.get("/:id", isVerified, selfUser, onlyAdmins, courseController.getCourseById);
+router.get("/:id", isVerified, selfUser, courseController.getCourseById);
 router.patch("/:id",   validate(updateCourseSchema), isVerified, onlyAdmins, courseController.updateCourse);
 router.delete("/:id",  isVerified, onlyAdmins, courseController.deleteCourse);
 

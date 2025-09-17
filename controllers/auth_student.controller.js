@@ -71,7 +71,6 @@ const login = async (req, res) => {
         const { email, password } = req.body
         const body = await Student.findOne({ where: { email } })
         const unhashedPass = compareHash(body.password, password,)
-        console.log(unhashedPass)
 
         if (!body || !email || !password) {
             return errorMessage(res, "password or email wrong", 400, "Error in logging")

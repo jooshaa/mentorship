@@ -16,7 +16,7 @@ const loginSchema = Joi.object({
 
 
 const otpSchema = Joi.object({
-  otp: Joi.string().length(4).required(),
+  otp: Joi.string().length(6).required(),
 });
 
 

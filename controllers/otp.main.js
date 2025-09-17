@@ -13,17 +13,14 @@ const newOtp = async (values) => {
         const now = new Date()
         const expiration_time = addMinustesToDate(now, 3)
         const otp = generate_otp()
-        console.log(values);
         
         await sendMail(values.email, otp)
         const encodedValue = await encode(JSON.stringify(values))
-        console.log(encodedValue);
                 
 
         const newOtpRow = await Otp.create({ otp, expiration_time, encodedValue })
         cleanOtp(newOtpRow, expiration_time)
 
-        console.log("code sent")
     //    return successMessage(res, 201, "Otp saved")
     }
     catch (error) {

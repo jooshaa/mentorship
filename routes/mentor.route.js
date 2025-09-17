@@ -9,10 +9,11 @@ const selfUser = require('../middleware/guards/selfStudent');
 
 
 
+router.get('/top-by-course', mentorController.getTopMentorsByCourse)
 router.post("/", validate(createMentorSchema), isVerified, onlyAdmins, mentorController.createMentor);
 router.get("/", isVerified, onlyAdmins, mentorController.getAllMentors);
 router.get("/:id", isVerified, selfUser, onlyAdmins, mentorController.getMentorById);
-router.patch("/:id", isVerified, onlyAdmins, validate(updateMentorSchema), mentorController.updateMentor);
-router.delete("/:id", isVerified , onlyAdmins, mentorController.deleteMentor);
+router.patch("/:id", isVerified, selfUser, validate(updateMentorSchema), mentorController.updateMentor);
+router.delete("/:id", isVerified , selfUser, mentorController.deleteMentor);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const Mentor = require("../models/mentor");
 const { hashPass } = require("../utils/bcrypt");
 const { successMessage, errorMessage } = require("../helper/send.Err_Suc");
-
+const logger = require("../utils/logger");
 
 const createMentor = async (req, res) => {
   try {
@@ -10,10 +10,12 @@ const createMentor = async (req, res) => {
     if (existing) return errorMessage(res, "Mentor already exists", 409, "Validation error");
 
     const hashedPassword = hashPass(password);
+    
     const newMentor = await Mentor.create({ ...req.body, password: hashedPassword });
-
+    
     return successMessage(res, 201, "Mentor created", newMentor);
   } catch (error) {
+    logger.error(`Error in user: ${error.message}`);
     return errorMessage(res, error.message, 500, "Error in creating ");
   }
 };
@@ -22,11 +24,44 @@ const createMentor = async (req, res) => {
 const getAllMentors = async (req, res) => {
   try {
     const mentors = await Mentor.findAll();
+    
     return successMessage(res, 200, "Mentors", mentors);
   } catch (error) {
+
     return errorMessage(res, error.message, 500, "Error in getting");
   }
 };
+
+
+async function getTopMentorsByCourse(req, res) {
+  try {
+    const { courseName } = req.query;
+    if (!courseName) {
+      return errorMessage(res, "courseName query parameter is required", 400, "Bad Request");
+    }
+
+    const topMentors = await Mentor.findAll({
+      include: [{
+        model: Contract,
+        include: [{
+          model: Course,
+          where: { name: courseName }
+        }]
+      }],
+      attributes: [
+        "id",
+        "name",
+        [fn("COUNT", col("contracts.id")), "contracts_count"]
+      ],
+      group: ["mentor.id"],
+      order: [[literal("contracts_count"), "DESC"]]
+    });
+
+    return successMessage(res, 200, "Top mentors fetched", topMentors);
+  } catch (err) {
+    return errorMessage(res, err.message, 500, "Error fetching top mentors");
+  }
+}
 
 
 const getMentorById = async (req, res) => {
@@ -34,8 +69,10 @@ const getMentorById = async (req, res) => {
     const mentor = await Mentor.findByPk(req.params.id);
     if (!mentor) return errorMessage(res, "Not found", 404, "Not found");
 
+    
     return successMessage(res, 200, "Mentor found", mentor);
   } catch (error) {
+    logger.error(`Error in user: ${error.message}`);
     return errorMessage(res, error.message, 500, "Error in getting");
   }
 };
@@ -49,8 +86,10 @@ const updateMentor = async (req, res) => {
     if (req.body.password) req.body.password = hashPass(req.body.password);
 
     await mentor.update(req.body);
+    
     return successMessage(res, 200, " updated", mentor);
   } catch (error) {
+    logger.error(`Error in user: ${error.message}`);
     return errorMessage(res, error.message, 500, "Error in updating ");
   }
 };
@@ -62,8 +101,10 @@ const deleteMentor = async (req, res) => {
     if (!mentor) return errorMessage(res, "Not found", 404, "Not found");
 
     await mentor.destroy();
+    
     return successMessage(res, 200, " deleted");
   } catch (error) {
+    logger.error(`Error in user: ${error.message}`);
     return errorMessage(res, error.message, 500, "Error in deleting ");
   }
 };
@@ -74,4 +115,5 @@ module.exports = {
   getMentorById,
   updateMentor,
   deleteMentor,
+  getTopMentorsByCourse,
 };

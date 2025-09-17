@@ -17,7 +17,7 @@ const createContract = async (req, res) => {
 
 
 const findByTime = async (req, res) => {
-const { startDate, endDate } = req.params;
+const { startDate, endDate } = req.query;
 const start = new Date(startDate);
 const end = new Date(endDate);
 

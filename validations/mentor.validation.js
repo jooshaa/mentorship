@@ -5,7 +5,7 @@ const createMentorSchema = Joi.object({
   name: Joi.string().max(72).required(),
   email: Joi.string().email().max(82).required(),
   password: Joi.string().min(6).max(100).required(),
-  phone: Joi.string().pattern(/^[0-9+\-() ]*$/).optional(),
+  phone: Joi.string().pattern(/^[0-9+\-() ]*$/).optional(),//size problem
   specialization: Joi.string().max(100).optional(),
   role: Joi.string().valid("mentor").optional(),
 });

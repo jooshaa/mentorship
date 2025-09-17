@@ -1,0 +1,9 @@
+2025-09-17 18:36:03 [ERROR]: Error in user: Validation error
+2025-09-17 18:36:04 [ERROR]: Error in user: Validation error
+2025-09-17 19:50:53 [ERROR]: Error in user: Validation error
+2025-09-17 19:51:03 [ERROR]: Error in user: Validation error
+2025-09-17 19:51:05 [ERROR]: Error in user: Validation error
+2025-09-17 19:54:38 [ERROR]: Error in user: value too long for type character varying(20)
+2025-09-17 19:57:06 [ERROR]: Error in user: value too long for type character varying(20)
+2025-09-17 19:57:36 [ERROR]: Error in user: value too long for type character varying(20)
+2025-09-17 19:59:24 [ERROR]: Error in user: value too long for type character varying(20)
