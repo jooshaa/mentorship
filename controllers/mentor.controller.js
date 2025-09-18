@@ -2,6 +2,11 @@ const Mentor = require("../models/mentor");
 const { hashPass } = require("../utils/bcrypt");
 const { successMessage, errorMessage } = require("../helper/send.Err_Suc");
 const logger = require("../utils/logger");
+const Contract = require("../models/contract");
+const Course = require("../models/course");
+const { fn, col, literal } = require("sequelize");
+
+
 
 const createMentor = async (req, res) => {
   try {
@@ -43,8 +48,10 @@ async function getTopMentorsByCourse(req, res) {
     const topMentors = await Mentor.findAll({
       include: [{
         model: Contract,
+        attributes: [],
         include: [{
           model: Course,
+          attributes: [],
           where: { name: courseName }
         }]
       }],
@@ -82,6 +89,9 @@ const updateMentor = async (req, res) => {
   try {
     const mentor = await Mentor.findByPk(req.params.id);
     if (!mentor) return errorMessage(res, "Not found", 404, "Not found");
+
+     const existing = await Mentor.findOne({ where: { email } });
+    if (existing) return errorMessage(res, "Mentor already exists", 409, "Validation error");
 
     if (req.body.password) req.body.password = hashPass(req.body.password);
 

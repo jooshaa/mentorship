@@ -6,12 +6,13 @@ const Course = require("../models/course");
 const Mentor = require("../models/mentor");
 const { Op } = require('sequelize')
 const logger = require("../utils/logger");
+const { model } = require("../config/db");
 
 
 const createPayment = async (req, res) => {
   try {
     const newPayment = await Payment.create(req.body);
-    
+
     return successMessage(res, 201, "Payment created", newPayment);
   } catch (error) {
     logger.error(`Error in payment: ${error.message}`);
@@ -26,15 +27,28 @@ const findPaid = async (req, res) => {
       include: [
         {
           model: Student,
-          where: { id: studentId }
+          where: { id: studentId },
+          attributes: ["name", "email", "phone"]
         },
         {
           model: Contract,
-          include: [Course, Mentor]
+          include: [
+            {
+              model: Course,
+              // attributes: ["name", "email", "phone"]
+            },
+            {
+              model: Mentor,
+              attributes: ["name", "email", "phone"],
+            }
+
+
+          ]
         }
       ]
     });
 
+    return successMessage(res, 201, "Payment by student id", payments);
   } catch (error) {
     return errorMessage(res, error.message, 500, "Error finding payment");
   }
@@ -68,7 +82,7 @@ const updatePayment = async (req, res) => {
     if (!payment) return errorMessage(res, "Payment not found", 404, "Not found");
 
     await payment.update(req.body);
-    
+
     return successMessage(res, 200, "Payment updated", payment);
   } catch (error) {
     logger.error(`Error in payment: ${error.message}`);
@@ -83,7 +97,7 @@ const deletePayment = async (req, res) => {
     if (!payment) return errorMessage(res, "Payment not found", 404, "Not found");
 
     await payment.destroy();
-    
+
     return successMessage(res, 200, "Payment deleted");
   } catch (error) {
     logger.error(`Error in payment: ${error.message}`);

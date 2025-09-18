@@ -100,12 +100,15 @@ const getStudentById = async (req, res) => {
     }
 };
 
-// update 
+
 const updateStudent = async (req, res) => {
     try {
-        // findbyemail
+
         const student = await Student.findByPk(req.params.id);
         if (!student) return errorMessage(res, "Not found", 404, "Not found");
+
+        const existing = await Student.findOne({ where: { email } });
+        if (existing) return errorMessage(res, "Student already exists", 409, "Validation error");
 
         if (req.body.password) req.body.password = hashPass(req.body.password);
 

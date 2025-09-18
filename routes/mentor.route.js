@@ -9,7 +9,7 @@ const selfUser = require('../middleware/guards/selfStudent');
 
 
 
-router.get('/top-by-course', mentorController.getTopMentorsByCourse)
+router.get('/top-by-course', isVerified, selfUser, mentorController.getTopMentorsByCourse)
 router.post("/", validate(createMentorSchema), isVerified, onlyAdmins, mentorController.createMentor);
 router.get("/", isVerified, onlyAdmins, mentorController.getAllMentors);
 router.get("/:id", isVerified, selfUser, onlyAdmins, mentorController.getMentorById);

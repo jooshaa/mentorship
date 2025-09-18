@@ -9,6 +9,7 @@ const selfUser = require('../middleware/guards/selfStudent');
 
 
 router.post("/", validate(createPaymentSchema), isVerified, onlyAdmins,  paymentController.createPayment);
+router.get("/find", isVerified, onlyAdmins, paymentController.findPaid);
 router.get("/", isVerified, onlyAdmins, paymentController.getAllPayments);
 router.get("/:id", isVerified, selfUser, onlyAdmins, paymentController.getPaymentById);
 router.patch("/:id", isVerified, onlyAdmins, validate(updatePaymentSchema), paymentController.updatePayment);

@@ -90,6 +90,10 @@ const updateAdmin = async (req, res) => {
         const admin = await Admin.findByPk(id);
         if (!admin) return errorMessage(res, "Not found", 404, "Not found");
 
+           const candidate = await Admin.findOne({ where: { email } });
+        if (candidate) return errorMessage(res, "Admin already exists", 409, "Validation error");
+
+
         if (req.body.password) req.body.password = hashPass(req.body.password); //esli parol izmenili 
 
         await admin.update(req.body);
